@@ -1,0 +1,24 @@
+<div class="container">
+  <div class="row center">
+    <h3>Sign in to Frozennn</h3>
+  </div>
+  <div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+      <%= form_for :sign_in, url: "/users/sign_in", method: "POST" do |f| %>
+        <div class="form-group">
+          <%= f.label :username, "User name" %>
+          <%= f.text_field :username, class: "form-control" %>
+        </div>
+        <div class="form-group">
+          <%= f.label :password %>
+          <%= f.password_field :password, class: "form-control" %>
+        </div>
+        <div class="form-group">
+          <%= f.submit "Sign in", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+    </div>
+    <div class="col-md-4"></div>
+  </div>
+</div>

@@ -1,0 +1,36 @@
+<nav class="navbar navbar-inverse">
+  <ul class="nav navbar-nav nav-title">
+    <li>
+      <a class="navbar-brand" href="#">Ticket</a>
+    </li>
+    <li class="pull-right">
+      <a href="javascript:;" onclick="toggleNav()">
+        <i class="fa fa-bars"></i>
+      </a>
+    </li>
+  </ul>
+  <ul class="nav navbar-nav navbar-right">
+    <li class="dropdown dropdown-user">
+      <a href="#" class="dropdown-toggle padding-top-bottom-10px" dropdown-menu-hover="" data-toggle="dropdown" data-close-others="true">
+        <img alt="" class="img-circle" src="/images/avatar.png" width="30px" height="30px">
+        <span class="username username-hide-on-mobile">
+          <%= current_user.name %>
+        </span>
+        <i class="fa fa-angle-down username"></i>
+      </a>
+      <ul class="dropdown-menu dropdown-menu-default">
+        <li>
+          <%= link_to user_path(current_user) do %>
+            <i class="icon-user"></i> Thông tin tài khoản
+          <% end %>
+        </li>
+        <li class="divider"> </li>
+        <li>
+          <%= link_to sign_out_path, method: :delete do %>
+            <i class="icon-logout"></i> Đăng xuất
+          <% end %>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>

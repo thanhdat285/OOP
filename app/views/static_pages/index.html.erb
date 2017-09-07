@@ -1,0 +1,33 @@
+<% if @current_user.present? %>
+
+<% else %>
+  <div class="login ng-scope">
+    <div class="clearfix"></div>
+    <div class="logo">
+      <a href="#">
+      </a>
+    </div>
+    <div class="content">
+      <%= form_for :sign_in, url: "/sign_in", method: :post do |f| %>
+        <h3 class="form-title font-green">Đăng nhập</h3>
+        <div class="form-group">
+          <%= f.label :email, "Email", class: "control-label" %>
+          <%= f.text_field :email, class: "form-control form-control-solid placeholder-no-fix",
+            placeholder: "Email" %>
+        </div>
+        <div class="form-group">
+          <%= f.label :password, "Mật khẩu", class: "control-label" %>
+          <%= f.password_field :password, class: "form-control form-control-solid placeholder-no-fix",
+            placeholder: "Mật khẩu" %>
+        </div>
+        <div class="form-actions">
+          <%= f.submit "Đăng nhập", class: "btn green btn-block uppercase" %>
+          <!-- <button type="button" class="btn btn-block">Tài khoản thử nghiệm</button> -->
+        </div>
+      <% end %>
+    </div>
+    <div class="text-center">
+      Chưa có tài khoản?&nbsp;<a href="users/new">Đăng ký</a>
+    </div>
+  </div>
+<% end %>

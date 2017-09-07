@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Oop</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <% if current_user.present? %>
+      <%= render "layouts/header" %>
+      <div id="nav_left" class="sidenav">
+        <a href="#">Bảng tin</a>
+        <a href="#">Đặt vé</a>
+      </div>
+      <div id="main">
+        <%= yield %>
+      </div>
+    <% else %>
+      <%= yield %>
+    <% end %>
+  </body>
+</html>
