@@ -2,10 +2,10 @@ class CreateFilms < ActiveRecord::Migration[5.1]
   def change
     create_table :films do |t|
       t.string :name
-      t.references :room, foreign_key: true
-      t.datetime :time_begin
-      t.datetime :time_end
-      t.integer :user_sell_id
+      t.string :image
+      t.string :kind
+      t.string :duration
+      t.date :release_date
 
       t.timestamps
     end

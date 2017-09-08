@@ -1,10 +1,9 @@
 default: &default
-  adapter: mysql2
-  encoding: utf8
+  adapter: postgresql
+  encoding: unicode
+  user: root
+  password: postgres
   pool: 5
-  username: root
-  password: thanhdat97
-  socket: /var/run/mysqld/mysqld.sock
 
 development:
   <<: *default
@@ -17,3 +16,24 @@ test:
 production:
   <<: *default
   database: oop
+
+
+
+# default: &default
+#   adapter: mysql2
+#   encoding: utf8
+#   pool: 5
+#   username: root
+#   password: thanhdat97
+
+# development:
+#   <<: *default
+#   database: oop
+
+# test:
+#   <<: *default
+#   database: oop_test
+
+# production:
+#   <<: *default
+#   database: oop

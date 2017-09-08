@@ -1,3 +1,4 @@
 rails db:drop
 rails db:create
 rails db:migrate
+rake data:fake

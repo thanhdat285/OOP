@@ -13,12 +13,17 @@ gem 'coffee-rails', '~> 4.2'
 gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 
-gem "mysql2"
+gem 'pg', '0.18.4'
+# gem "mysql2"
 gem "config"
 gem "byebug"
 gem 'jquery-rails'
 gem "bootstrap-sass", "~> 3.3.7"
 gem "font-awesome-rails"
+gem 'jwt', '1.5.6'
+gem "will_paginate"
+
+gem "rack-cors"
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

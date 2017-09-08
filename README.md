@@ -1,24 +1,33 @@
-# README
+url = 'https://tickett.herokuapp.com/';
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+==== Sign up ====
 
-Things you may want to cover:
+/api/v1/customers/sign_up
 
-* Ruby version
+data: :name, :email, :password
 
-* System dependencies
 
-* Configuration
 
-* Database creation
+==== Sign in ====
 
-* Database initialization
+/api/v1/customers/sign_in
 
-* How to run the test suite
+data: :email, :password
 
-* Services (job queues, cache servers, search engines, etc.)
+response: token
 
-* Deployment instructions
+==== Get Locations ====
 
-* ...
+/api/v1/customers/locations
+
+headers: {Authorization: token}
+
+data: :page
+
+==== Get Films ====
+
+/api/v1/customers/films
+
+headers: {Authorization: token}
+
+data: :page

@@ -12,21 +12,43 @@
 
 ActiveRecord::Schema.define(version: 20170906074824) do
 
-  create_table "films", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string "name"
+  create_table "film_rooms", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "film_id"
     t.bigint "room_id"
     t.datetime "time_begin"
     t.datetime "time_end"
     t.integer "user_sell_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["room_id"], name: "index_films_on_room_id"
+    t.index ["film_id"], name: "index_film_rooms_on_film_id"
+    t.index ["room_id"], name: "index_film_rooms_on_room_id"
+  end
+
+  create_table "films", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "name"
+    t.string "image"
+    t.string "kind"
+    t.string "duration"
+    t.date "release_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "locations", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "name"
+    t.string "address"
+    t.string "image"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "rooms", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "name"
     t.json "seats"
+    t.bigint "location_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["location_id"], name: "index_rooms_on_location_id"
   end
 
   create_table "tickets", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -44,10 +66,13 @@ ActiveRecord::Schema.define(version: 20170906074824) do
     t.integer "role"
     t.string "email"
     t.string "password"
+    t.string "avatar"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  add_foreign_key "films", "rooms"
+  add_foreign_key "film_rooms", "films"
+  add_foreign_key "film_rooms", "rooms"
+  add_foreign_key "rooms", "locations"
   add_foreign_key "tickets", "films"
 end

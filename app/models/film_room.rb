@@ -1,0 +1,2 @@
+class FilmRoom < ApplicationRecord
+end
