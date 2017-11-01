@@ -12,6 +12,7 @@ Rails.application.routes.draw do
         resources :locations, only: :index
         resources :rooms, only: :index
         resources :tickets, only: :index
+        resources :schedules, only: :index
 
         post :sign_up, to: "users#create"
         post :sign_in, to: "sessions#create"

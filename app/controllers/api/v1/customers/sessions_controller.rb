@@ -4,7 +4,7 @@ class Api::V1::Customers::SessionsController < Api::V1::Customers::BaseControlle
   def create
     email = params[:email]
     password = params[:password]
-    @user = User.select(:id, :name, :email, :avatar).find_by(email: email)
+    @user = User.find_by(email: email)
     return render json: {code: 0, message: "Tài khoản không tồn tại"} if @user.nil?
     if @user.authenticate!(password)
       # sign_in @user

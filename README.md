@@ -31,3 +31,12 @@ data: :page
 headers: {Authorization: token}
 
 data: :page
+
+
+==== Get Schedules ====
+
+/api/v1/customers/schedules
+
+headers: {Authorization: token}
+
+data: :page, :location_id

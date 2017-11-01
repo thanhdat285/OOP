@@ -31,7 +31,7 @@ namespace :data do
       Location.all.each do |location|
         r = rand()*2
         if r > 1
-          FilmRoom.create(
+          Schedule.create(
             film_id: film.id,
             location_id: location.id,
             time_begin: Time.now,

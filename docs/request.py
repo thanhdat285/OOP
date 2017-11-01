@@ -87,12 +87,20 @@ def get_rooms(location_id):
   res = json.loads(req.text)
   return res['data']
 
+def get_schedules(location_id):
+  req = requests.get(oop_url + 'api/v1/customers/schedules',
+    params={'location_id': location_id},
+    headers={'Authorization': token})
+  res = json.loads(req.text)
+  return res['data']
+
 # sign_up()
 sign_in()
 print(get_films())
 locations = get_locations()
 print(locations)
 for location in locations:
-  print(get_rooms(location['id']))
+  # print(get_rooms(location['id']))
+  print(get_schedules(location['id']))
 
 # req = requests.get(oop_url + 'api/v1/customers/films', headers={'Authorization': token})
