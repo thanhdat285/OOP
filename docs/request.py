@@ -54,7 +54,8 @@ def collect_locations():
 # collect_films()
 # collect_locations()
 
-oop_url = 'http://localhost:3000/'
+# oop_url = 'http://localhost:3000/'
+oop_url = 'https://tickett.herokuapp.com/'
 token = ''
 
 def sign_up():
@@ -72,14 +73,26 @@ def sign_in():
 def get_locations():
   req = requests.get(oop_url + 'api/v1/customers/locations', headers={'Authorization': token})
   res = json.loads(req.text)
-  print(res['data'])
+  return res['data']
 
 def get_films():
   req = requests.get(oop_url + 'api/v1/customers/films', headers={'Authorization': token})
   res = json.loads(req.text)
-  print(res['data'])
+  return res['data']
 
-sign_up()
+def get_rooms(location_id):
+  req = requests.get(oop_url + 'api/v1/customers/rooms',
+    params={'location_id': location_id},
+    headers={'Authorization': token})
+  res = json.loads(req.text)
+  return res['data']
+
+# sign_up()
 sign_in()
-get_locations()
-get_films()
+print(get_films())
+locations = get_locations()
+print(locations)
+for location in locations:
+  print(get_rooms(location['id']))
+
+# req = requests.get(oop_url + 'api/v1/customers/films', headers={'Authorization': token})
