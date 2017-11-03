@@ -71,12 +71,17 @@ def sign_in():
   token = response['token']
 
 def get_locations():
-  req = requests.get(oop_url + 'api/v1/customers/locations', headers={'Authorization': token})
+  req = requests.get(oop_url + 'api/v1/customers/locations')
   res = json.loads(req.text)
   return res['data']
 
 def get_films():
-  req = requests.get(oop_url + 'api/v1/customers/films', headers={'Authorization': token})
+  req = requests.get(oop_url + 'api/v1/customers/films')
+  res = json.loads(req.text)
+  return res['data']
+
+def get_film(film_id):
+  req = requests.get(oop_url + 'api/v1/customers/films/'+str(film_id))
   res = json.loads(req.text)
   return res['data']
 
@@ -94,13 +99,52 @@ def get_schedules(location_id):
   res = json.loads(req.text)
   return res['data']
 
-# sign_up()
+def get_schedule(schedule_id):
+  req = requests.get(oop_url + 'api/v1/customers/schedules/'+str(schedule_id),
+    headers={'Authorization': token})
+  res = json.loads(req.text)
+  return res['data']
+
+def book_ticket(ticket_id):
+  req = requests.post(oop_url + 'api/v1/customers/tickets/book', headers={'Authorization': token},
+    json={'id': ticket_id})
+  res = json.loads(req.text)
+  return res
+
+# sign_in()
+# print(get_schedule(1))
+
+
+# test book ticket
+# sign_in()
+# print(book_ticket(2))
+# print(book_ticket(2))
+
+
+# full test except test book ticket
+sign_up()
 sign_in()
-print(get_films())
+
+print('Films')
+films = get_films()
+print(films)
+
+for film in films:
+  print(get_film(film['id']))
+
+print('Location')
 locations = get_locations()
 print(locations)
-for location in locations:
-  # print(get_rooms(location['id']))
-  print(get_schedules(location['id']))
 
-# req = requests.get(oop_url + 'api/v1/customers/films', headers={'Authorization': token})
+for location in locations:
+  print('Location ' + str(location['id']) + ' Rooms')
+  print(get_rooms(location['id']))
+
+  print('Location ' + str(location['id']) + ' Schedules')
+  schedules = get_schedules(location['id'])
+  print(schedules)
+
+  for schedule in schedules:
+    print(get_schedule(schedule['id']))
+
+req = requests.get(oop_url + 'api/v1/customers/films', headers={'Authorization': token})

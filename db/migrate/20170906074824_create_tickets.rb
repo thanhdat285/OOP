@@ -3,8 +3,9 @@ class CreateTickets < ActiveRecord::Migration[5.1]
     create_table :tickets do |t|
       t.integer :price
       t.integer :user_buy_id
-      t.string :seat
-      t.references :film, foreign_key: true
+      t.string :seat_row
+      t.integer :seat_col
+      t.references :schedule, index: true, foreign_key: true
 
       t.timestamps
     end

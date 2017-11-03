@@ -1,3 +1,3 @@
 class Ticket < ApplicationRecord
-  belongs_to :film
+  belongs_to :schedule
 end

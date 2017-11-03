@@ -12,23 +12,12 @@
 
 ActiveRecord::Schema.define(version: 20170906074824) do
 
-  create_table "film_rooms", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.bigint "film_id"
-    t.bigint "room_id"
-    t.datetime "time_begin"
-    t.datetime "time_end"
-    t.integer "user_sell_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["film_id"], name: "index_film_rooms_on_film_id"
-    t.index ["room_id"], name: "index_film_rooms_on_room_id"
-  end
-
   create_table "films", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name"
     t.string "image"
     t.string "kind"
     t.string "duration"
+    t.text "content"
     t.date "release_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -51,14 +40,30 @@ ActiveRecord::Schema.define(version: 20170906074824) do
     t.index ["location_id"], name: "index_rooms_on_location_id"
   end
 
+  create_table "schedules", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "film_id"
+    t.bigint "location_id"
+    t.bigint "room_id"
+    t.datetime "time_begin"
+    t.datetime "time_end"
+    t.bigint "user_sell_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["film_id"], name: "index_schedules_on_film_id"
+    t.index ["location_id"], name: "index_schedules_on_location_id"
+    t.index ["room_id"], name: "index_schedules_on_room_id"
+    t.index ["user_sell_id"], name: "index_schedules_on_user_sell_id"
+  end
+
   create_table "tickets", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "price"
     t.integer "user_buy_id"
-    t.string "seat"
-    t.bigint "film_id"
+    t.string "seat_row"
+    t.integer "seat_col"
+    t.bigint "schedule_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["film_id"], name: "index_tickets_on_film_id"
+    t.index ["schedule_id"], name: "index_tickets_on_schedule_id"
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -71,8 +76,9 @@ ActiveRecord::Schema.define(version: 20170906074824) do
     t.datetime "updated_at", null: false
   end
 
-  add_foreign_key "film_rooms", "films"
-  add_foreign_key "film_rooms", "rooms"
   add_foreign_key "rooms", "locations"
-  add_foreign_key "tickets", "films"
+  add_foreign_key "schedules", "films"
+  add_foreign_key "schedules", "locations"
+  add_foreign_key "schedules", "users", column: "user_sell_id"
+  add_foreign_key "tickets", "schedules"
 end

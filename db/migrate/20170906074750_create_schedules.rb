@@ -3,6 +3,7 @@ class CreateSchedules < ActiveRecord::Migration[5.1]
     create_table :schedules do |t|
       t.references :film, foreign_key: true
       t.references :location, foreign_key: true
+      t.references :room, index: true
       t.datetime :time_begin
       t.datetime :time_end
       t.references :user_sell, index: true, foreign_key: {to_table: :users}

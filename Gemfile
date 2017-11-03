@@ -22,6 +22,7 @@ gem "bootstrap-sass", "~> 3.3.7"
 gem "font-awesome-rails"
 gem 'jwt', '1.5.6'
 gem "will_paginate"
+gem "bulk_insert"
 
 gem "rack-cors"
 

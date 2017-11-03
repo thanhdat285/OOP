@@ -12,6 +12,8 @@ data: :name, :email, :password
 
 /api/v1/customers/sign_in
 
+method: POST
+
 data: :email, :password
 
 response: token
@@ -20,17 +22,18 @@ response: token
 
 /api/v1/customers/locations
 
-headers: {Authorization: token}
-
 data: :page
 
 ==== Get Films ====
 
 /api/v1/customers/films
 
-headers: {Authorization: token}
-
 data: :page
+
+
+==== Show Film Detail ====
+
+/api/v1/customers/films/:film_id   // vd = /api/v1/customers/films/1
 
 
 ==== Get Schedules ====
@@ -40,3 +43,23 @@ data: :page
 headers: {Authorization: token}
 
 data: :page, :location_id
+
+
+==== Show Info Ticket Booking ====
+
+/api/v1/customers/schedules/:schedule_id 
+
+headers: {Authorization: token}
+
+response: info film, info seats, seller's name, seat status: 2 dimensions array. [row, col, type, available?, price].
+VD: ["A", 1, "VIP", true, 80000]
+
+==== Book Ticket ====
+
+/api/v1/customers/tickets/book
+
+method: POST
+
+headers: {Authorization: token}
+
+data: :ticket_id

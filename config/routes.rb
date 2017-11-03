@@ -8,11 +8,13 @@ Rails.application.routes.draw do
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
       namespace :customers do
-        resources :films, only: :index
+        resources :films, only: [:index, :show]
         resources :locations, only: :index
         resources :rooms, only: :index
-        resources :tickets, only: :index
-        resources :schedules, only: :index
+        resources :tickets, only: [] do 
+          post :book, on: :collection
+        end
+        resources :schedules, only: [:index, :show]
 
         post :sign_up, to: "users#create"
         post :sign_in, to: "sessions#create"
