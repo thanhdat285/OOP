@@ -8,7 +8,7 @@ class Api::V1::Customers::SchedulesController < Api::V1::Customers::BaseControll
     		.paginate(page: params[:page] || 1, per_page: 10)
     elsif params[:film_id].present?
       @schedules = Schedule.select("schedules.*", "users.name as user_sell_name", "films.name as film_name", 
-        "films.image as film_image", "films.kind as film_kind").joins(:user_sell)
+        "films.image as film_image", "films.kind as film_kind").joins(:user_sell).joins(:film)
         .joins(:location).where(film_id: params[:film_id])
         .paginate(page: params[:page] || 1, per_page: 10)
     end

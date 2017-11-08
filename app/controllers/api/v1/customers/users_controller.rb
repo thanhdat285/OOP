@@ -2,7 +2,7 @@ class Api::V1::Customers::UsersController < Api::V1::Customers::BaseController
   skip_before_action :authenticate_request!
 
   def create
-    @user = User.new(user_params)
+    @user = User.new(user_params.merge)
     if @user.save
       render json: {code: 1, message: "Tạo mới tài khoản thành công"}
     else

@@ -5,6 +5,8 @@ class User < ApplicationRecord
   validates :email, presence: true, uniqueness: true
   validates :password, presence: true, length: {minimum: 6}
 
+  enum role: [:admin, :seller, :company, :customer]
+
   attr_accessor :password_confirmation
 
   def authenticate! pass

@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
+
       namespace :customers do
         resources :films, only: [:index, :show]
         resources :locations, only: :index
@@ -16,10 +17,16 @@ Rails.application.routes.draw do
         end
         resources :schedules, only: [:index, :show]
 
-        post :sign_up, to: "users#create"
         post :sign_in, to: "sessions#create"
         delete :sign_out, to: "sessions#destroy"
       end
+
+      namespace :sellers do 
+        resources :schedules, only: [:index, :show]
+        resources :tickets, only: [:create]
+      end
+
+      post :sign_up, to: "users#create"
     end
   end
 end

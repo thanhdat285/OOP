@@ -2,26 +2,32 @@ namespace :data do
   desc "TODO"
   task fake: :environment do
     puts "Create data"
-    File.open("#{Rails.root}/docs/films/films.csv", "r") do |file|
-      file.each_line.with_index do |line, index|
-        next if index == 0
-        line = line.gsub("\n", "")
-        values = line.split("|")
-        Film.create(
-          name: values[0],
-          image: "/images/films/" + values[1],
-          kind: values[2],
-          duration: values[3],
-          release_date: values[4]
-        )
+
+    Film.bulk_insert do |worker|
+      File.open("#{Rails.root}/docs/films/films.csv", "r") do |file|
+        file.each_line.with_index do |line, index|
+          next if index == 0
+          line = line.gsub("\n", "")
+          values = line.split("|")
+          worker.add(
+            name: values[0],
+            image: "/images/films/" + values[1],
+            kind: values[2],
+            duration: values[3],
+            release_date: values[4],
+            content: values[5]
+          )
+        end
       end
     end
 
-    File.open("#{Rails.root}/docs/locations/locations.csv", "r") do |file|
-      file.each_line.with_index do |line, index|
-        next if index == 0
-        line = line.gsub("\n", "")
-        Location.create(name: line)
+    Location.bulk_insert do |worker|
+      File.open("#{Rails.root}/docs/locations/locations.csv", "r") do |file|
+        file.each_line.with_index do |line, index|
+          next if index == 0
+          line = line.gsub("\n", "")
+          worker.add(name: line)
+        end
       end
     end
 
@@ -39,20 +45,23 @@ namespace :data do
       end
     end
 
-    Location.all.each do |location|
-      r = (rand() * 3).to_i + 1
-      r.times do |a|
-        Room.create(location_id: location.id, name: "Phòng #{a+1}",
-          seats: {
-            values: seats
-          })
+    Room.bulk_insert do |worker|
+      Location.all.each do |location|
+        r = (rand() * 3).to_i + 1
+        r.times do |a|
+          worker.add(location_id: location.id, name: "Phòng #{a+1}",
+            seats: {
+              values: seats
+            })
+        end
       end
     end
 
-    u = User.create(name: "Seller", email: "one@gmail.com", password: "123456")
-
+    
     Film.all.each do |film|
       Location.all.each do |location|
+        u = User.create(name: "Seller", email: "#{location.id}@gmail.com", password: "123456", role: User.roles[:seller],
+          location_id: location.id)
         r = rand()*2
         if r > 1
           schedule = Schedule.create(

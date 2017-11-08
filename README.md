@@ -2,9 +2,11 @@ url = 'https://tickett.herokuapp.com/';
 
 ==== Sign up ====
 
-/api/v1/customers/sign_up
+/api/v1/sign_up
 
-data: :name, :email, :password
+method: POST
+
+data: :name, :email, :password, role: :seller or :customer
 
 
 

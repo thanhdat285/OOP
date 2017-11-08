@@ -12,31 +12,37 @@ def collect_films():
   films = []
   html_films = soup.find_all(attrs={'class': 'film-lists'})
   for film in html_films:
-    img = film.find(attrs={'class': 'product-image'}).find('img')['src']
+    img = film.find(attrs={'class': 'product-images'}).find('img')['src']
     name = film.find(attrs={'class': 'product-name'}).find('a').text.strip()
     infos = film.find_all(attrs={'class': 'cgv-movie-info'})
+    url_detail = film.find(attrs={'class': 'product-images'}).find('a')['href']
     kind = infos[0].find(attrs={'class': 'cgv-info-normal'}).text.strip()
     duration = infos[1].find(attrs={'class': 'cgv-info-normal'}).text.strip()
     start_date = infos[2].find(attrs={'class': 'cgv-info-normal'}).text.strip()
 
+    req_detail = requests.get(url_detail)
+    parser_html_detail = BeautifulSoup(req_detail.content, 'html.parser')
+    content = parser_html_detail.find(attrs={'class': 'tab-content'}).find(attrs={'class': 'std'}).text.strip()
+
     img_data = requests.get(img).content
     img_name = uuid.uuid4().hex + '.png'
-    with open('films/' + img_name, 'wb') as handler:
-      handler.write(img_data)
-    with open('../public/images/films/' + img_name, 'wb') as handler:
+    # with open('films/' + img_name, 'wb') as handler:
+    #   handler.write(img_data)
+    with open('public/images/films/' + img_name, 'wb') as handler:
       handler.write(img_data)
     films.append({
       'img': img_name,
       'name': name,
       'kind': kind,
       'duration': duration,
-      'start_date': start_date
+      'start_date': start_date,
+      'content': content
     })
 
-  with io.open('films/films.csv', 'w+', encoding='utf-8') as file:
-    file.write('name,img,kind,duration,start_date\n')
+  with io.open('films.csv', 'w+', encoding='utf-8') as file:
+    file.write('name,img,kind,duration,start_date,content\n')
     for film in films:
-      line = film['name'] + '|' + film['img'] + '|' + film['kind'] + '|' + film['duration']+'|'+film['start_date']+'\n'
+      line = film['name'] + '|' + film['img'] + '|' + film['kind'] + '|' + film['duration']+'|'+film['start_date']+'|' + film['content'] + '\n'
       file.write(line)
 
 def collect_locations():
@@ -60,13 +66,14 @@ token = ''
 
 def sign_up():
   data = {'name': 'Thanh Dat', 'email': 'thanhdath97@gmail.com', 'password': '123456'}
-  req = requests.post(oop_url + 'api/v1/customers/sign_up', json=data)
+  req = requests.post(oop_url + 'api/v1/sign_up', json=data)
   print(req.text)
 
 def sign_in():
   data = {'email': 'thanhdath97@gmail.com', 'password': '123456'}
   req = requests.post(oop_url + 'api/v1/customers/sign_in', json=data)
   response = json.loads(req.text)
+  print(response)
   global token
   token = response['token']
 
@@ -99,6 +106,13 @@ def get_schedules(location_id):
   res = json.loads(req.text)
   return res['data']
 
+def get_schedules_by_film_id(film_id):
+  req = requests.get(oop_url + 'api/v1/customers/schedules',
+    params={'film_id': film_id},
+    headers={'Authorization': token})
+  res = json.loads(req.text)
+  return res['data']
+
 def get_schedule(schedule_id):
   req = requests.get(oop_url + 'api/v1/customers/schedules/'+str(schedule_id),
     headers={'Authorization': token})
@@ -125,26 +139,28 @@ def book_ticket(ticket_id):
 sign_up()
 sign_in()
 
-print('Films')
-films = get_films()
-print(films)
+print(get_schedules_by_film_id(1))
 
-for film in films:
-  print(get_film(film['id']))
+# print('Films')
+# films = get_films()
+# print(films)
 
-print('Location')
-locations = get_locations()
-print(locations)
+# for film in films:
+#   print(get_film(film['id']))
 
-for location in locations:
-  print('Location ' + str(location['id']) + ' Rooms')
-  print(get_rooms(location['id']))
+# print('Location')
+# locations = get_locations()
+# print(locations)
 
-  print('Location ' + str(location['id']) + ' Schedules')
-  schedules = get_schedules(location['id'])
-  print(schedules)
+# for location in locations:
+#   print('Location ' + str(location['id']) + ' Rooms')
+#   print(get_rooms(location['id']))
 
-  for schedule in schedules:
-    print(get_schedule(schedule['id']))
+#   print('Location ' + str(location['id']) + ' Schedules')
+#   schedules = get_schedules(location['id'])
+#   print(schedules)
 
-req = requests.get(oop_url + 'api/v1/customers/films', headers={'Authorization': token})
+#   for schedule in schedules:
+#     print(get_schedule(schedule['id']))
+
+# req = requests.get(oop_url + 'api/v1/customers/films', headers={'Authorization': token})
