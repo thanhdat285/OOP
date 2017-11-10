@@ -60,10 +60,10 @@ namespace :data do
     
     Film.all.each do |film|
       Location.all.each do |location|
-        u = User.create(name: "Seller", email: "#{location.id}@gmail.com", password: "123456", role: User.roles[:seller],
+        u = User.create(name: "Seller", email: "#{location.id}x#{film.id}@gmail.com", password: "123456", role: User.roles[:seller],
           location_id: location.id)
-        r = rand()*2
-        if r > 1
+        r = rand()*4
+        if r >= 1
           schedule = Schedule.create(
             film_id: film.id,
             location_id: location.id,
