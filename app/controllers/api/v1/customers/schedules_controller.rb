@@ -16,7 +16,7 @@ class Api::V1::Customers::SchedulesController < Api::V1::Customers::BaseControll
 
   def show
   	@schedule = Schedule.select("*").joins(:room).joins(:film).find_by id: params[:id]
-    @seats = @schedule.seats["values"]
+    @seats = JSON.parse(@schedule.seats)["values"]
     @tickets = @schedule.tickets
     for i in 0..(@seats.length-1) do 
       ticket = get_ticket @seats[i][0], @seats[i][1]
