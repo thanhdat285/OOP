@@ -134,7 +134,7 @@ def book_tickets(ticket_ids):
 
 def update_info(info={}):
   req = requests.put(oop_url + 'api/v1/customers/users/info', headers={'Authorization': token},
-    json=info)
+    data=info, files={'avatar': open('../public/favicon.ico','rb')})
   res = json.loads(req.text)
   return res
 
@@ -157,17 +157,17 @@ def deposit(money):
 # full test except test book ticket
 sign_up()
 sign_in()
+# print(get_schedules_by_film_id(2))
 
-# print(update_info({'name': 'ThanhDatH', 'email': 'hihi', 'password': 234567}))
+print(update_info({'name': 'ThanhDatH', 'email': 'hihi2', 'password': 234567}))
 # print(deposit(1000000))
 
 # print(get_schedule(1))
 # print(book_ticket(44))
-# print(book_tickets(list(range(161, 190))))
-# print(book_ticket(2))
+# print(book_tickets(list(range(1, 5))))
+# print(book_ticket(7))
 
 # print(get_schedule(1))
-# print(get_schedules_by_film_id(2))
 # print(get_schedules_by_film_id(3))
 # print(get_schedules_by_film_id(4))
 # print(get_schedules_by_film_id(5))

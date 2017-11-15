@@ -80,4 +80,4 @@ VD: ["A", 1, "VIP", true, 80000, ticket_id]
 
 	method: PUT
 
-	data: :name, :email, :password
+	data: :name, :email, :password, :avatar

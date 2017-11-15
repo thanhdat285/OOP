@@ -27,4 +27,18 @@ class ApplicationController < ActionController::Base
     @current_user = User.find_by id: payload.first['user_id']
     raise APIError::Client::Unauthorized unless @current_user
   end
+
+  def save_file_with_token dir, file
+    begin 
+      FileUtils.mkdir_p(dir) unless File.directory?(dir)
+      extn = File.extname file.original_filename
+      name = File.basename(file.original_filename, extn).gsub(/[^A-z0-9]/, "_")
+      full_name = name + "_" + SecureRandom.hex(5) + extn
+      path = File.join(dir, full_name)
+      File.open(path, "wb") { |f| f.write file.read }
+      return path
+    rescue
+      return nil
+    end
+  end
 end

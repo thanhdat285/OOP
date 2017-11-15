@@ -12,6 +12,10 @@ class Api::V1::Customers::UsersController < Api::V1::Customers::BaseController
 
   def update
     if @current_user.update_attributes(user_params)
+      if params[:avatar].present?
+        @current_user.update_attributes(avatar: save_file_with_token("public/images/avatars/#{@current_user.id}/", 
+          params[:avatar]))
+      end
       render json: {code: 1, message: "Cập nhật tài khoản thành công"}
     else
       render json: {code: 0, message: @current_user.errors.full_messages}
