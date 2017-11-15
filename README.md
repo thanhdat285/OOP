@@ -72,6 +72,8 @@ VD: ["A", 1, "VIP", true, 80000, ticket_id]
 
 	method: PUT
 
+	headers: {Authorization: token}
+
 	data: :money
 
 ==== Update user info ==== 
@@ -80,4 +82,17 @@ VD: ["A", 1, "VIP", true, 80000, ticket_id]
 
 	method: PUT
 
-	data: :name, :email, :password, :avatar
+	headers: {Authorization: token}
+
+	data: :name, :avatar
+
+==== Update user password ====
+
+	/api/v1/customers/users/update_password
+
+	method: PUT
+
+	headers: {Authorization: token}
+
+	data: :password
+	
