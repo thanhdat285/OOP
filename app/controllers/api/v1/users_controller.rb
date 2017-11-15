@@ -5,7 +5,7 @@ class Api::V1::UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       if params[:avatar].present?
-        @user.update_attributes(avatar: save_file_with_token("public/images/avatars/#{@user.id}/", 
+        @user.update_attributes(avatar: save_file_with_token("images/avatars/#{@user.id}/", 
           params[:avatar]))
       end
       render json: {code: 1, message: "Tạo mới tài khoản thành công"}

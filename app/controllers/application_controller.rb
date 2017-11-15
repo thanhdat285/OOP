@@ -29,6 +29,7 @@ class ApplicationController < ActionController::Base
   end
 
   def save_file_with_token dir, file
+    dir = "public/#{dir}"
     begin 
       FileUtils.mkdir_p(dir) unless File.directory?(dir)
       extn = File.extname file.original_filename

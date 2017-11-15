@@ -60,9 +60,9 @@ def collect_locations():
 # collect_films()
 # collect_locations()
 # 
-oop_url = 'http://localhost:3000/'
+# oop_url = 'http://localhost:3000/'
 # oop_url = 'https://tickett.herokuapp.com/'
-# oop_url = 'http://tickett.cloudapp.net/'
+oop_url = 'http://tickett.cloudapp.net/'
 token = ''
 
 def sign_up():
@@ -134,7 +134,7 @@ def book_tickets(ticket_ids):
 
 def update_info(info={}):
   req = requests.put(oop_url + 'api/v1/customers/users/info', headers={'Authorization': token},
-    data=info, files={'avatar': open('../public/favicon.ico','rb')})
+    data=info, files={'avatar': open('../public/images/avatar.png','rb')})
   res = json.loads(req.text)
   return res
 
