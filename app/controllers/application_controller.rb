@@ -29,14 +29,13 @@ class ApplicationController < ActionController::Base
   end
 
   def save_file_with_token dir, file
-    dir = "public/#{dir}"
     begin 
       FileUtils.mkdir_p(dir) unless File.directory?(dir)
       extn = File.extname file.original_filename
       name = File.basename(file.original_filename, extn).gsub(/[^A-z0-9]/, "_")
       full_name = name + "_" + SecureRandom.hex(5) + extn
       path = File.join(dir, full_name)
-      File.open(path, "wb") { |f| f.write file.read }
+      File.open("public/#{path}", "wb") { |f| f.write file.read }
       return path
     rescue
       return nil

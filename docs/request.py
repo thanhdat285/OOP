@@ -159,7 +159,7 @@ sign_up()
 sign_in()
 # print(get_schedules_by_film_id(2))
 
-print(update_info({'name': 'ThanhDatH', 'email': 'hihi2', 'password': 234567}))
+print(update_info({'name': 'ThanhDatH', 'email': 'thanhdath97@gmail.com', 'password': 123456}))
 # print(deposit(1000000))
 
 # print(get_schedule(1))
