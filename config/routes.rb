@@ -18,6 +18,7 @@ Rails.application.routes.draw do
         resources :schedules, only: [:index, :show]
         resources :users, only: [:update] do 
           put :deposit, on: :collection
+          put :update_password, on: :collection
         end
 
         post :sign_in, to: "sessions#create"

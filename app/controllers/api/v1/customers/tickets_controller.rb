@@ -11,7 +11,7 @@ class Api::V1::Customers::TicketsController < Api::V1::Customers::BaseController
 	  		end
 	  		@ticket.update_attributes(user_buy_id: @current_user.id)
 	  		@current_user.pay(@ticket.price)
-	  		render json: {code: 1, message: "Thành công"}
+	  		render json: {code: 1, message: "Thành công", data: {balance: @current_user.balance}}
 	  	end
 	elsif params[:ticket_ids].present? && params[:ticket_ids].is_a?(Array)
 		@tickets = Ticket.where(id: params[:ticket_ids])
@@ -32,7 +32,7 @@ class Api::V1::Customers::TicketsController < Api::V1::Customers::BaseController
 
 		@tickets.update_all(user_buy_id: @current_user.id)
 		@current_user.pay(_total_price)
-		render json: {code: 1, message: "Thành công"}
+		render json: {code: 1, message: "Thành công", data: {balance: @current_user.balance}}
 	end
   end
 

@@ -30,8 +30,16 @@ class Api::V1::Customers::UsersController < Api::V1::Customers::BaseController
     end
   end
 
+  def update_password
+    if @current_user.update_attributes(password: params[:password])
+      render json: {code: 1, message: "Cập nhật mật khẩu thành công"}
+    else
+      render json: {code: 0, message: "Cập nhật mật khẩu thất bại"}
+    end
+  end
+
   private
   def user_params
-    params.permit(:name, :email, :password)
+    params.permit(:name)
   end
 end
