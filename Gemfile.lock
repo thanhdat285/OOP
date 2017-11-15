@@ -100,7 +100,7 @@ GEM
     mini_portile2 (2.2.0)
     minitest (5.10.3)
     multi_json (1.12.2)
-    pg (0.18.4)
+    mysql2 (0.4.9-x64-mingw32)
     nio4r (2.1.0)
     nokogiri (1.8.0-x64-mingw32)
       mini_portile2 (~> 2.2.0)

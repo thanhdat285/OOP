@@ -59,13 +59,14 @@ def collect_locations():
 
 # collect_films()
 # collect_locations()
-
-# oop_url = 'http://localhost:3000/'
-oop_url = 'https://tickett.herokuapp.com/'
+# 
+oop_url = 'http://localhost:3000/'
+# oop_url = 'https://tickett.herokuapp.com/'
+# oop_url = 'http://tickett.cloudapp.net/'
 token = ''
 
 def sign_up():
-  data = {'name': 'Thanh Dat', 'email': 'thanhdath97@gmail.com', 'password': '123456'}
+  data = {'name': 'Thanh Dat', 'email': 'thanhdath97@gmail.com', 'password': '123456', 'role': 'customer'}
   req = requests.post(oop_url + 'api/v1/sign_up', json=data)
   print(req.text)
 
@@ -120,8 +121,26 @@ def get_schedule(schedule_id):
   return res['data']
 
 def book_ticket(ticket_id):
-  req = requests.post(oop_url + 'api/v1/customers/tickets/book', headers={'Authorization': token},
-    json={'id': ticket_id})
+  req = requests.put(oop_url + 'api/v1/customers/tickets/book', headers={'Authorization': token},
+    json={'ticket_id': ticket_id})
+  res = json.loads(req.text)
+  return res
+
+def book_tickets(ticket_ids):
+  req = requests.put(oop_url + 'api/v1/customers/tickets/book', headers={'Authorization': token},
+    json={'ticket_ids': ticket_ids})
+  res = json.loads(req.text)
+  return res
+
+def update_info(info={}):
+  req = requests.put(oop_url + 'api/v1/customers/users/info', headers={'Authorization': token},
+    json=info)
+  res = json.loads(req.text)
+  return res
+
+def deposit(money):
+  req = requests.put(oop_url + 'api/v1/customers/users/deposit', headers={'Authorization': token},
+    json={'money': money})
   res = json.loads(req.text)
   return res
 
@@ -139,7 +158,20 @@ def book_ticket(ticket_id):
 sign_up()
 sign_in()
 
-print(get_schedules_by_film_id(1))
+# print(update_info({'name': 'ThanhDatH', 'email': 'hihi', 'password': 234567}))
+# print(deposit(1000000))
+
+# print(get_schedule(1))
+# print(book_ticket(44))
+# print(book_tickets(list(range(161, 190))))
+# print(book_ticket(2))
+
+# print(get_schedule(1))
+# print(get_schedules_by_film_id(2))
+# print(get_schedules_by_film_id(3))
+# print(get_schedules_by_film_id(4))
+# print(get_schedules_by_film_id(5))
+# print(get_schedules_by_film_id(6))
 
 # print('Films')
 # films = get_films()

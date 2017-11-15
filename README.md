@@ -53,15 +53,31 @@ data: :page, :location_id
 
 headers: {Authorization: token}
 
-response: info film, info seats, seller's name, seat status: 2 dimensions array. [row, col, type, available?, price].
-VD: ["A", 1, "VIP", true, 80000]
+response: info film, info seats, seller's name, seat status: 2 dimensions array. [row, col, type, available?, price, ticket_id].
+VD: ["A", 1, "VIP", true, 80000, ticket_id]
 
 ==== Book Ticket ====
 
-/api/v1/customers/tickets/book
+	/api/v1/customers/tickets/book
 
-method: POST
+	method: PUT
 
-headers: {Authorization: token}
+	headers: {Authorization: token}
 
-data: :ticket_id
+	data: :ticket_id or :ticket_ids for array of tickets
+
+==== Deposit =====
+
+	/api/v1/customers/users/deposit
+
+	method: PUT
+
+	data: :money
+
+==== Update user info ==== 
+	
+	/api/v1/customers/users/info
+
+	method: PUT
+
+	data: :name, :email, :password

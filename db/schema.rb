@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170906074824) do
+ActiveRecord::Schema.define(version: 20170906075000) do
 
   create_table "films", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name"
@@ -72,8 +72,11 @@ ActiveRecord::Schema.define(version: 20170906074824) do
     t.string "email"
     t.string "password"
     t.string "avatar"
+    t.bigint "location_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "balance", default: 100000
+    t.index ["location_id"], name: "index_users_on_location_id"
   end
 
   add_foreign_key "rooms", "locations"
@@ -81,4 +84,5 @@ ActiveRecord::Schema.define(version: 20170906074824) do
   add_foreign_key "schedules", "locations"
   add_foreign_key "schedules", "users", column: "user_sell_id"
   add_foreign_key "tickets", "schedules"
+  add_foreign_key "users", "locations"
 end

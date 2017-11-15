@@ -13,9 +13,12 @@ Rails.application.routes.draw do
         resources :locations, only: :index
         resources :rooms, only: :index
         resources :tickets, only: [] do 
-          post :book, on: :collection
+          put :book, on: :collection
         end
         resources :schedules, only: [:index, :show]
+        resources :users, only: [:update] do 
+          put :deposit, on: :collection
+        end
 
         post :sign_in, to: "sessions#create"
         delete :sign_out, to: "sessions#destroy"
