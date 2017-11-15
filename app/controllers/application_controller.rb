@@ -30,7 +30,7 @@ class ApplicationController < ActionController::Base
 
   def save_file_with_token dir, file
     begin 
-      FileUtils.mkdir_p(dir) unless File.directory?(dir)
+      FileUtils.mkdir_p("public/#{dir}") unless File.directory?("public/#{dir}")
       extn = File.extname file.original_filename
       name = File.basename(file.original_filename, extn).gsub(/[^A-z0-9]/, "_")
       full_name = name + "_" + SecureRandom.hex(5) + extn
