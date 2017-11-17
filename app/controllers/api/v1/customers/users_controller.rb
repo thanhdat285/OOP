@@ -37,7 +37,7 @@ class Api::V1::Customers::UsersController < Api::V1::Customers::BaseController
       render json: {code: 0, message: "Cập nhật mật khẩu thất bại"}
     end
   end
-
+  
   private
   def user_params
     params.permit(:name)

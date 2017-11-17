@@ -71,7 +71,7 @@ def sign_up():
   print(req.text)
 
 def sign_in():
-  data = {'email': 'thanhdath97@gmail.com', 'password': '234567'}
+  data = {'email': 'thanhdath97@gmail.com', 'password': '123456'}
   req = requests.post(oop_url + 'api/v1/customers/sign_in', json=data)
   response = json.loads(req.text)
   print(response)
@@ -150,6 +150,11 @@ def update_password(password):
   res = json.loads(req.text)
   return res
 
+def history_book():
+  req = requests.get(oop_url + 'api/v1/customers/tickets/history_book', headers={'Authorization': token})
+  res = json.loads(req.text)
+  return res
+
 # seller 
 def sign_up_seller(data):
   req = requests.post(oop_url + 'api/v1/sign_up', json=data)
@@ -175,16 +180,33 @@ def create_schedule(data):
   res = json.loads(req.text)
   return res
 
+def history_users_book(data={}):
+  req = requests.get(oop_url + 'api/v1/customers/tickets/history_users_book', headers={'Authorization': token},
+    json=data)
+  res = json.loads(req.text)
+  return res
 
 def test_seller():
-  print(sign_up_seller({'name': 'Người bán vé', 'email': 'sellerhihi', 'password': '123456', 'role': 'seller'}))
+  # print(sign_up_seller({'name': 'Người bán vé', 'email': 'sellerhihi', 'password': '123456', 'role': 'seller'}))
   print(sign_in_seller({'email': 'sellerhihi', 'password': '123456'}))
-  print(create_film({'name': 'Film moi', 'kind': 'Funny', 'duration': '180 phút', 'release_date': '18/11/2017'}))
-  print(get_rooms(1))
-  print(create_schedule({'film_id': 1, 'location_id': 1, 'room_id': 1, 'time_begin': '18/11/2017 13:00', 
-    'time_end': '18/11/2017 15:00', 'price_VIP': 100000, 'price_NORMAL': 60000}))
+  # print(create_film({'name': 'Film moi', 'kind': 'Funny', 'duration': '180 phút', 'release_date': '18/11/2017'}))
+  # print(get_rooms(1))
+  # print(create_schedule({'film_id': 1, 'location_id': 1, 'room_id': 1, 'time_begin': '18/11/2017 13:00', 
+  #   'time_end': '18/11/2017 15:00', 'price_VIP': 100000, 'price_NORMAL': 60000}))
+  print(history_users_book({'film_id': 1}))
+  print(history_users_book({'location_id': 1}))
+  print(history_users_book())
 
-test_seller()
+def test_customer():
+  sign_up()
+  sign_in()
+  # deposit(1000000000)
+  # for i in range(1, 100):
+  #   print(book_ticket(i))
+  print(history_book())
+
+test_customer()
+# test_seller()
 
 # sign_in()
 # print(get_schedule(1))

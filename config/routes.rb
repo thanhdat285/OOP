@@ -14,6 +14,8 @@ Rails.application.routes.draw do
         resources :rooms, only: :index
         resources :tickets, only: [] do 
           put :book, on: :collection
+          get :history_book, on: :collection 
+          get :history_users_book, on: :collection
         end
         resources :schedules, only: [:index, :show, :create]
         resources :users, only: [:update] do 

@@ -95,7 +95,13 @@ url = 'https://tickett.herokuapp.com/';
 
 	data: :password
 
+==== History Book Tickets ====
 
+	/api/v1/customers/tickets/history_book
+
+	method: GET
+
+	headers: {Authorization: token}
 
 API Người bán vé
 
@@ -134,3 +140,13 @@ API Người bán vé
 		(eq: price_VIP: 80000, price_NORMAL: 40000)
 
 	note: time_end, time_begin will be converted to datetime, eq: time_begin: '18/10/2017 13:00'
+
+==== History Users Book Tickets ====
+
+	/api/v1/customers/tickets/history_users_book
+
+	method: GET
+
+	headers: {Authorization: token}
+
+	data: NULL or film_id or location_id
