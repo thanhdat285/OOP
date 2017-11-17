@@ -9,13 +9,13 @@ Rails.application.routes.draw do
     namespace :v1 do
 
       namespace :customers do
-        resources :films, only: [:index, :show]
+        resources :films, only: [:index, :show, :create]
         resources :locations, only: :index
         resources :rooms, only: :index
         resources :tickets, only: [] do 
           put :book, on: :collection
         end
-        resources :schedules, only: [:index, :show]
+        resources :schedules, only: [:index, :show, :create]
         resources :users, only: [:update] do 
           put :deposit, on: :collection
           put :update_password, on: :collection

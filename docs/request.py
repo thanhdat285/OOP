@@ -60,9 +60,9 @@ def collect_locations():
 # collect_films()
 # collect_locations()
 # 
-# oop_url = 'http://localhost:3000/'
+oop_url = 'http://localhost:3000/'
 # oop_url = 'https://tickett.herokuapp.com/'
-oop_url = 'http://tickett.cloudapp.net/'
+# oop_url = 'http://tickett.cloudapp.net/'
 token = ''
 
 def sign_up():
@@ -71,7 +71,7 @@ def sign_up():
   print(req.text)
 
 def sign_in():
-  data = {'email': 'thanhdath97@gmail.com', 'password': '123456'}
+  data = {'email': 'thanhdath97@gmail.com', 'password': '234567'}
   req = requests.post(oop_url + 'api/v1/customers/sign_in', json=data)
   response = json.loads(req.text)
   print(response)
@@ -144,6 +144,48 @@ def deposit(money):
   res = json.loads(req.text)
   return res
 
+def update_password(password):
+  req = requests.put(oop_url + 'api/v1/customers/users/update_password', headers={'Authorization': token},
+    json={'password': password})
+  res = json.loads(req.text)
+  return res
+
+# seller 
+def sign_up_seller(data):
+  req = requests.post(oop_url + 'api/v1/sign_up', json=data)
+  res = json.loads(req.text)
+  return res
+
+def sign_in_seller(data):
+  req = requests.post(oop_url + 'api/v1/customers/sign_in', json=data)
+  response = json.loads(req.text)
+  print(response)
+  global token
+  token = response['token']
+
+def create_film(data):
+  req = requests.post(oop_url + 'api/v1/customers/films', headers={'Authorization': token},
+    data=data, files={'image': open('../public/images/avatar.png','rb')})
+  res = json.loads(req.text)
+  return res
+
+def create_schedule(data):
+  req = requests.post(oop_url + 'api/v1/customers/schedules', headers={'Authorization': token},
+    json=data)
+  res = json.loads(req.text)
+  return res
+
+
+def test_seller():
+  print(sign_up_seller({'name': 'Người bán vé', 'email': 'sellerhihi', 'password': '123456', 'role': 'seller'}))
+  print(sign_in_seller({'email': 'sellerhihi', 'password': '123456'}))
+  print(create_film({'name': 'Film moi', 'kind': 'Funny', 'duration': '180 phút', 'release_date': '18/11/2017'}))
+  print(get_rooms(1))
+  print(create_schedule({'film_id': 1, 'location_id': 1, 'room_id': 1, 'time_begin': '18/11/2017 13:00', 
+    'time_end': '18/11/2017 15:00', 'price_VIP': 100000, 'price_NORMAL': 60000}))
+
+test_seller()
+
 # sign_in()
 # print(get_schedule(1))
 
@@ -155,11 +197,12 @@ def deposit(money):
 
 
 # full test except test book ticket
-sign_up()
-sign_in()
+# sign_up()
+# sign_in()
+# print(update_password("234567"))
 # print(get_schedules_by_film_id(2))
 
-print(update_info({'name': 'ThanhDatH', 'email': 'thanhdath97@gmail.com', 'password': 123456}))
+# print(update_info({'name': 'ThanhDatH', 'email': 'thanhdath97@gmail.com', 'password': 123456}))
 # print(deposit(1000000))
 
 # print(get_schedule(1))

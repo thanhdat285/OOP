@@ -4,4 +4,8 @@ class Schedule < ApplicationRecord
 	belongs_to :room
 	belongs_to :location
 	has_many :tickets
+
+	validates :film_id, presence: true 
+	validates :room_id, presence: true
+	validates :location_id, presence: true
 end

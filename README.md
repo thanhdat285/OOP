@@ -2,59 +2,58 @@ url = 'https://tickett.herokuapp.com/';
 
 ==== Sign up ====
 
-/api/v1/sign_up
+	/api/v1/sign_up
 
-method: POST
+	method: POST
 
-data: :name, :email, :password, role: :seller or :customer
-
+	data: :name, :email, :password, role: :seller or :customer
 
 
 ==== Sign in ====
 
-/api/v1/customers/sign_in
+	/api/v1/customers/sign_in
 
-method: POST
+	method: POST
 
-data: :email, :password
+	data: :email, :password
 
-response: token
+	response: token
 
 ==== Get Locations ====
 
-/api/v1/customers/locations
+	/api/v1/customers/locations
 
-data: :page
+	data: :page
 
 ==== Get Films ====
 
-/api/v1/customers/films
+	/api/v1/customers/films
 
-data: :page
+	data: :page
 
 
 ==== Show Film Detail ====
 
-/api/v1/customers/films/:film_id   // vd = /api/v1/customers/films/1
+	/api/v1/customers/films/:film_id   // vd = /api/v1/customers/films/1
 
 
 ==== Get Schedules ====
 
-/api/v1/customers/schedules
+	/api/v1/customers/schedules
 
-headers: {Authorization: token}
+	headers: {Authorization: token}
 
-data: :page, :location_id
+	data: :page, :location_id
 
 
 ==== Show Info Ticket Booking ====
 
-/api/v1/customers/schedules/:schedule_id 
+	/api/v1/customers/schedules/:schedule_id 
 
-headers: {Authorization: token}
+	headers: {Authorization: token}
 
-response: info film, info seats, seller's name, seat status: 2 dimensions array. [row, col, type, available?, price, ticket_id].
-VD: ["A", 1, "VIP", true, 80000, ticket_id]
+	response: info film, info seats, seller's name, seat status: 2 dimensions array. [row, col, type, available?, price, ticket_id].
+	VD: ["A", 1, "VIP", true, 80000, ticket_id]
 
 ==== Book Ticket ====
 
@@ -95,4 +94,33 @@ VD: ["A", 1, "VIP", true, 80000, ticket_id]
 	headers: {Authorization: token}
 
 	data: :password
+
+
+
+API Người bán vé
+
+==== Create Film ====
 	
+	/api/v1/customers/films
+
+	method: POST
+
+	headers: {Authorization: token}
+
+	data: :name (string), :kind (string), :duration (string), :release_date (string), :image (file)
+
+	note: server will check role of current user (only seller can create), release_date will be converted to date, 
+	eq: release_date: '18/10/2017'
+
+==== Create Schedule ====
+
+	/api/v1/customers/schedules
+
+	method: POST
+
+	headers: {Authorization: token}
+
+	data: :film_id, :room_id, :time_begin (string), :time_end (string), :price_VIP, :price_NORMAL 
+		(eq: price_VIP: 80000, price_NORMAL: 40000)
+
+	note: time_end, time_begin will be converted to datetime, eq: time_begin: '18/10/2017 13:00'

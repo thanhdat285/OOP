@@ -6,14 +6,15 @@ class ApplicationController < ActionController::Base
   def login_required
     redirect_to root_path unless session[:users]
   end
-
-  # def current_user
-  #   return nil unless session[:user].present?
-  #   @current_user ||= User.find_by(id: session[:user]["id"])
-  # end
-
+  
   def sign_in user
     session[:user] = {"id" => user.id}
+  end
+
+  def check_seller 
+    unless @current_user.seller?
+      render json: {code: 0, message: "Bạn không có quyền truy cập"}, status: 400
+    end
   end
 
   def authenticate_request!

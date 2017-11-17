@@ -1,4 +1,5 @@
 class Api::V1::Customers::SchedulesController < Api::V1::Customers::BaseController
+  before_action :check_seller, only: [:create]
 
   def index
     if params[:location_id].present?
@@ -29,11 +30,37 @@ class Api::V1::Customers::SchedulesController < Api::V1::Customers::BaseControll
     end
   end
 
+  def create
+    # require schdule_params and price_VIP, price_NORMAL 
+    @room = Room.find_by(id: params[:room_id])
+    @schedule = Schedule.new(schedule_params.merge(location_id: @room.location_id,
+      user_sell_id: @current_user.id))
+    if @schedule.save 
+      Ticket.bulk_insert do |worker|
+        @room.seats["values"].each do |seat|
+          worker.add(
+            price: params["price_#{seat[2]}".to_sym],
+            seat_row: seat[0],
+            seat_col: seat[1],
+            schedule_id: @schedule.id
+          )
+        end
+      end
+      render json: {code: 1, message: "Tạo mới thành công"}
+    else
+      render json: {code: 0, message: "Tạo mới thất bại"}
+    end
+  end
+
   private
   def get_ticket row, col
     @tickets.each do |ticket|
       return ticket if ticket.seat_row == row && ticket.seat_col == col
     end
     return nil
+  end
+
+  def schedule_params
+    params.permit(:film_id, :room_id, :time_begin, :time_end)
   end
 end
