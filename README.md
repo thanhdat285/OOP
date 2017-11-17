@@ -112,6 +112,16 @@ API Người bán vé
 	note: server will check role of current user (only seller can create), release_date will be converted to date, 
 	eq: release_date: '18/10/2017'
 
+==== Get rooms ====
+
+	/api/v1/customers/rooms
+
+	method: GET
+
+	headers: {Authorization: token}
+
+	data: :location_id
+
 ==== Create Schedule ====
 
 	/api/v1/customers/schedules

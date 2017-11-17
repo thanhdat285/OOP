@@ -1,6 +1,7 @@
 class Api::V1::Customers::TicketsController < Api::V1::Customers::BaseController
 
   def book
+  	params[:ticket_ids] = JSON.parse(params[:ticket_ids])
   	if params[:ticket_id].present?
 	  	@ticket = Ticket.find_by id: params[:ticket_id]
 	  	if @ticket.user_buy_id.present?
@@ -13,7 +14,7 @@ class Api::V1::Customers::TicketsController < Api::V1::Customers::BaseController
 	  		@current_user.pay(@ticket.price)
 	  		render json: {code: 1, message: "Thành công", data: {balance: @current_user.balance}}
 	  	end
-	elsif params[:ticket_ids].present? && params[:ticket_ids].is_a?(Array)
+	elsif params[:ticket_ids].present?
 		@tickets = Ticket.where(id: params[:ticket_ids])
 		user_bought = false
 		@tickets.each do |ticket|
