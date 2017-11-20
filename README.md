@@ -105,6 +105,8 @@ url = 'https://tickett.herokuapp.com/';
 
 **API Người bán vé**
 
+Account test: {email: 'one', password: '123456'}
+
 ==== Create Film ====
 	
 	/api/v1/customers/films
