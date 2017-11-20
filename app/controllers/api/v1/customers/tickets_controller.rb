@@ -39,29 +39,35 @@ class Api::V1::Customers::TicketsController < Api::V1::Customers::BaseController
   end
 
   def history_book
-    @tickets = Ticket.select("tickets.*", "films.name", "films.id", "locations.id", "locations.name",
-      "schedules.time_begin", "schedules.time_end", "films.image").joins(schedule: [:location, :film])
+    @tickets = Ticket.select("tickets.*", "films.name as film_name", "films.id as film_id", 
+      "locations.id as location_id", "locations.name as location_name",
+      "schedules.time_begin", "schedules.time_end", "films.image as film_image").joins(schedule: [:location, :film])
       .where(user_buy_id: @current_user.id).order("tickets.updated_at DESC")
   end
 
   def history_users_book
   	if params[:location_id].present?
-  	  @tickets = Ticket.select("tickets.*", "films.name", "films.id", "locations.name", "locations.id",
-  	  	"schedules.time_begin", "schedules.time_end", "films.image").joins(schedule: [:location, :film])
+  	  @tickets = Ticket.select("tickets.*", "films.name as film_name", "films.id as film_id", 
+        "locations.id as location_id", "locations.name as location_name", "schedules.time_begin", 
+        "schedules.time_end", "films.image as film_image", "users.name as user_buy_name")
+  	  	.joins(schedule: [:location, :film]).joins(:user_buy)
   	    .where("schedules.user_sell_id = #{@current_user.id} AND schedules.location_id = #{params[:location_id].to_i}")
   	    .order("tickets.updated_at DESC")
   	  @total_tickets = Ticket.joins(:schedule).where(schedules: {user_sell_id: @current_user.id, 
   	  	location_id: params[:location_id].to_i}).count
   	elsif params[:film_id].present?
-  		@tickets = Ticket.select("tickets.*", "films.name", "films.id", "locations.name", "locations.id",
-  	  	  "schedules.time_begin", "schedules.time_end", "films.image").joins(schedule: [:location, :film])
+  		@tickets = Ticket.select("tickets.*", "films.name as film_name", "films.id as film_id", 
+          "locations.id as location_id", "locations.name as location_name", "schedules.time_begin", 
+          "schedules.time_end", "films.image as film_image", "users.name as user_buy_name")
+  		  .joins(schedule: [:location, :film]).joins(:user_buy)
   	      .where("schedules.user_sell_id = #{@current_user.id} AND schedules.film_id = #{params[:film_id].to_i}")
   	      .order("tickets.updated_at DESC")
 	    @total_tickets = Ticket.joins(:schedule).where(schedules: {user_sell_id: @current_user.id, 
   	  	  film_id: params[:film_id].to_i}).count
   	else
-	  @tickets = Ticket.select("tickets.*", "users.name", "users.email", "users.avatar", "films.name", "films.id", 
-	  	  "locations.name", "locations.id", "schedules.time_begin", "schedules.time_end", "films.image")
+	  @tickets = Ticket.select("tickets.*", "films.name as film_name", "films.id as film_id", 
+        "locations.id as location_id", "locations.name as location_name", "schedules.time_begin", 
+        "schedules.time_end", "films.image as film_image", "users.name as user_buy_name")
 	    .joins(:user_buy).joins(schedule: [:location, :film]).where("schedules.user_sell_id = #{@current_user.id}")
 	    .order("tickets.updated_at DESC")
 	  @total_tickets = Ticket.joins(:schedule).where(schedules: {user_sell_id: @current_user.id}).count
