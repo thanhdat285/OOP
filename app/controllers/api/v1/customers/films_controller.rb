@@ -26,6 +26,6 @@ class Api::V1::Customers::FilmsController < Api::V1::Customers::BaseController
 
   private
   def film_params
-  	params.permit(:name, :kind, :duration, :release_date)
+  	params.permit(:name, :kind, :duration, :release_date, :content)
   end
 end

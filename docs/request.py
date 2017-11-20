@@ -60,9 +60,9 @@ def collect_locations():
 # collect_films()
 # collect_locations()
 # 
-oop_url = 'http://localhost:3000/'
+# oop_url = 'http://localhost:3000/'
 # oop_url = 'https://tickett.herokuapp.com/'
-# oop_url = 'http://tickett.cloudapp.net/'
+oop_url = 'http://tickett.cloudapp.net/'
 token = ''
 
 def sign_up():
@@ -187,15 +187,15 @@ def history_users_book(data={}):
   return res
 
 def test_seller():
-  # print(sign_up_seller({'name': 'Người bán vé', 'email': 'sellerhihi', 'password': '123456', 'role': 'seller'}))
+  print(sign_up_seller({'name': 'Người bán vé', 'email': 'sellerhihi', 'password': '123456', 'role': 'seller'}))
   print(sign_in_seller({'email': 'sellerhihi', 'password': '123456'}))
-  # print(create_film({'name': 'Film moi', 'kind': 'Funny', 'duration': '180 phút', 'release_date': '18/11/2017'}))
+  print(create_film({'name': 'Film moi', 'kind': 'Funny', 'duration': '180 phút', 'release_date': '18/11/2017'}))
   # print(get_rooms(1))
   # print(create_schedule({'film_id': 1, 'location_id': 1, 'room_id': 1, 'time_begin': '18/11/2017 13:00', 
   #   'time_end': '18/11/2017 15:00', 'price_VIP': 100000, 'price_NORMAL': 60000}))
-  print(history_users_book({'film_id': 1}))
-  print(history_users_book({'location_id': 1}))
-  print(history_users_book())
+  # print(history_users_book({'film_id': 1}))
+  # print(history_users_book({'location_id': 1}))
+  # print(history_users_book())
 
 def test_customer():
   sign_up()
@@ -205,8 +205,8 @@ def test_customer():
   #   print(book_ticket(i))
   print(history_book())
 
-test_customer()
-# test_seller()
+# test_customer()
+test_seller()
 
 # sign_in()
 # print(get_schedule(1))

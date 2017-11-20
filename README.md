@@ -113,7 +113,7 @@ API Người bán vé
 
 	headers: {Authorization: token}
 
-	data: :name (string), :kind (string), :duration (string), :release_date (string), :image (file)
+	data: :name (string), :kind (string), :duration (string), :release_date (string), :image (file), :content (string)
 
 	note: server will check role of current user (only seller can create), release_date will be converted to date, 
 	eq: release_date: '18/10/2017'
