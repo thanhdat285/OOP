@@ -1,4 +1,4 @@
-class Api::V1::Customers::TicketsController < Api::V1::Customers::BaseController
+class Api::V1::TicketsController < Api::V1::Customers::BaseController
   before_action :check_seller, only: [:history_users_book]
 
   def book

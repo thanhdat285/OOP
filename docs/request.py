@@ -60,18 +60,18 @@ def collect_locations():
 # collect_films()
 # collect_locations()
 # 
-# oop_url = 'http://localhost:3000/'
+oop_url = 'http://localhost:3000/'
 # oop_url = 'https://tickett.herokuapp.com/'
-oop_url = 'http://tickett.cloudapp.net/'
+# oop_url = 'http://tickett.cloudapp.net/'
 token = ''
 
 def sign_up():
-  data = {'name': 'Thanh Dat', 'email': 'thanhdath97@gmail.com', 'password': '123456', 'role': 'customer'}
+  data = {'name': 'Thanh Dat', 'email': '123@gmail.com', 'password': '123456', 'role': 'customer'}
   req = requests.post(oop_url + 'api/v1/sign_up', json=data)
   print(req.text)
 
 def sign_in():
-  data = {'email': 'thanhdath97@gmail.com', 'password': '123456'}
+  data = {'email': '123@gmail.com', 'password': '123456'}
   req = requests.post(oop_url + 'api/v1/customers/sign_in', json=data)
   response = json.loads(req.text)
   print(response)
@@ -200,10 +200,11 @@ def test_seller():
 def test_customer():
   sign_up()
   sign_in()
-  # deposit(1000000000)
-  # for i in range(1, 100):
-  #   print(book_ticket(i))
-  print(history_book())
+  deposit(1000000000)
+  for i in range(5000, 5011):
+    print(book_ticket(i))
+  print(book_tickets(list(range(6000, 6010))))
+  # print(history_book())
 
 test_customer()
 # test_seller()

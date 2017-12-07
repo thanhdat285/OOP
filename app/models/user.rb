@@ -24,6 +24,14 @@ class User < ApplicationRecord
     self.update_attributes(balance: self.balance + money)
   end
 
+  def book_tickets tickets 
+    _total_price = total_price(tickets)
+    return false if self.balance < _total_price
+    tickets.update_all(user_buy_id: self.id)
+    self.pay(_total_price)
+    return true
+  end
+
   private
   def check_confirmation
     self.password.eql?(self.password_confirmation)
@@ -33,5 +41,14 @@ class User < ApplicationRecord
     if self.password_changed?
       self.password = Digest::SHA1.hexdigest(Settings.code + self.password + self.email)
     end
+  end
+
+  private
+  def total_price tickets 
+    price = 0
+    tickets.each do |ticket|
+      price += ticket.price 
+    end
+    return price
   end
 end
