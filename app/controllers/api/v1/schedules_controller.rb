@@ -1,4 +1,4 @@
-class Api::V1::SchedulesController < Api::V1::Customers::BaseController
+class Api::V1::SchedulesController < Api::V1::BaseController
   before_action :check_seller, only: [:create]
 
   def index

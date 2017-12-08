@@ -1,4 +1,4 @@
-class Api::V1::LocationsController < Api::V1::Customers::BaseController
+class Api::V1::LocationsController < Api::V1::BaseController
 	skip_before_action :authenticate_request!
 
   def index

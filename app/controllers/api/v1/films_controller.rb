@@ -1,4 +1,4 @@
-class Api::V1::FilmsController < Api::V1::Customers::BaseController
+class Api::V1::FilmsController < Api::V1::BaseController
 	skip_before_action :authenticate_request!, only: [:index, :show]
 	before_action :check_seller, only: [:create]
 
