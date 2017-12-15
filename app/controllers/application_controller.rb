@@ -25,7 +25,12 @@ class ApplicationController < ActionController::Base
       return
     end
 
-    @current_user = User.find_by id: payload.first['user_id']
+    @current_user = User.find_by(id: payload.first['user_id'])
+    if @current_user.role == User.roles[:customer]
+      @current_user = @current_user.becomes(Customer)
+    else 
+      @current_user = @current_user.becomes(Seller)
+    end
     raise APIError::Client::Unauthorized unless @current_user
   end
 

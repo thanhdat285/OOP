@@ -66,12 +66,12 @@ oop_url = 'http://localhost:3000/'
 token = ''
 
 def sign_up():
-  data = {'name': 'Thanh Dat', 'email': '123@gmail.com', 'password': '123456', 'role': 'customer'}
+  data = {'name': 'Thanh Dat', 'email': '234@gmail.com', 'password': '123456', 'role': 'customer'}
   req = requests.post(oop_url + 'api/v1/sign_up', json=data)
   print(req.text)
 
 def sign_in():
-  data = {'email': '123@gmail.com', 'password': '123456'}
+  data = {'email': '234@gmail.com', 'password': '123456'}
   req = requests.post(oop_url + 'api/v1/customers/sign_in', json=data)
   response = json.loads(req.text)
   print(response)
@@ -187,23 +187,23 @@ def history_users_book(data={}):
   return res
 
 def test_seller():
-  # print(sign_up_seller({'name': 'Người bán vé', 'email': 'sellerhihi', 'password': '123456', 'role': 'seller'}))
-  print(sign_in_seller({'email': 'one', 'password': '123456'}))
-  # print(create_film({'name': 'Film moi', 'kind': 'Funny', 'duration': '180 phút', 'release_date': '18/11/2017'}))
-  # print(get_rooms(1))
-  # print(create_schedule({'film_id': 1, 'location_id': 1, 'room_id': 1, 'time_begin': '18/11/2017 13:00', 
-  #   'time_end': '18/11/2017 15:00', 'price_VIP': 100000, 'price_NORMAL': 60000}))
+  print(sign_up_seller({'name': 'Người bán vé', 'email': 'sellerhihi', 'password': '123456', 'role': 'seller'}))
+  print(sign_in_seller({'email': 'sellerhihi', 'password': '123456'}))
+  print(create_film({'name': 'Film moi', 'kind': 'Funny', 'duration': '180 phút', 'release_date': '18/11/2017'}))
+  print(get_rooms(1))
+  print(create_schedule({'film_id': 1, 'location_id': 1, 'room_id': 1, 'time_begin': '18/11/2017 13:00', 
+    'time_end': '18/11/2017 15:00', 'price_VIP': 100000, 'price_NORMAL': 60000}))
   print(history_users_book())
-  # print(history_users_book({'location_id': 1}))
+  print(history_users_book({'location_id': 1}))
   # print(history_users_book())
 
 def test_customer():
   sign_up()
   sign_in()
   deposit(1000000000)
-  for i in range(5000, 5011):
-    print(book_ticket(i))
-  print(book_tickets(list(range(6000, 6010))))
+  # for i in range(5000, 5011):
+  #   print(book_ticket(i))
+  print(book_tickets(list(range(3000, 3010))))
   # print(history_book())
 
 test_customer()
@@ -213,7 +213,6 @@ test_customer()
 # print(get_schedule(1))
 
 
-# test book ticket
 # sign_in()
 # print(book_ticket(2))
 # print(book_ticket(2))

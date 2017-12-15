@@ -5,39 +5,23 @@ class Api::V1::TicketsController < Api::V1::BaseController
   	params[:ticket_ids] = JSON.parse(params[:ticket_ids]) if params[:ticket_ids].present? && params[:ticket_ids].is_a?(String)
   	if params[:ticket_id].present?
 	  	@ticket = Ticket.where id: params[:ticket_id]
-	  	if @ticket.first.user_buy_id.present?
-	  		return render json: {code: 0, message: "Vé này đã có người mua"}
-	  	else
-	  		if @current_user.book_tickets(@ticket)
-	  			render json: {code: 1, message: "Thành công", data: {balance: @current_user.balance}}
-	  		else
-				render json: {code: 0, message: "Tài khoản của bạn không còn đủ tiền"}
-	  		end
-	  	end
+  		if @current_user.book_tickets(@ticket)
+  			render json: {code: 1, message: "Thành công", data: {balance: @current_user.balance}}
+  		else
+			render json: {code: 0, message: "Đặt vé thất bại"}
+  		end
 	elsif params[:ticket_ids].present?
 		@tickets = Ticket.where(id: params[:ticket_ids])
-		user_bought = false
-		@tickets.each do |ticket|
-			if ticket.user_buy_id.present?
-				user_bought = true 
-				break
-			end
-		end
-		return render json: {code: 0, message: "Tồn tại một vé đã có người mua"} if user_bought
-
 		if @current_user.book_tickets(@tickets)
 			render json: {code: 1, message: "Thành công", data: {balance: @current_user.balance}}
 		else
-			render json: {code: 0, message: "Tài khoản của bạn không còn đủ tiền"}
+			render json: {code: 0, message: "Đặt vé thất bại."}
 		end
 	end
   end
 
   def history_book
-    @tickets = Ticket.select("tickets.*", "films.name as film_name", "films.id as film_id", 
-      "locations.id as location_id", "locations.name as location_name",
-      "schedules.time_begin", "schedules.time_end", "films.image as film_image").joins(schedule: [:location, :film])
-      .where(user_buy_id: @current_user.id).order("tickets.updated_at DESC")
+    @tickets = @current_user.history_book_tickets
   end
 
   def history_users_book

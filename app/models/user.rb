@@ -25,11 +25,27 @@ class User < ApplicationRecord
   end
 
   def book_tickets tickets 
+    user_bought = false
+    tickets.each do |ticket|
+      if ticket.user_buy_id.present?
+        user_bought = true 
+        break
+      end
+    end
+    return false if user_bought
+
     _total_price = total_price(tickets)
     return false if self.balance < _total_price
     tickets.update_all(user_buy_id: self.id)
     self.pay(_total_price)
     return true
+  end
+
+  def history_book_tickets
+    return Ticket.select("tickets.*", "films.name as film_name", "films.id as film_id", 
+      "locations.id as location_id", "locations.name as location_name",
+      "schedules.time_begin", "schedules.time_end", "films.image as film_image").joins(schedule: [:location, :film])
+      .where(user_buy_id: self.id).order("tickets.updated_at DESC")
   end
 
   private
